@@ -1,0 +1,16 @@
+#!/bin/sh
+
+chmod u+x client
+chmod +x client.py
+
+if [ $1 == "-p" ]; then
+    if [ $3 == "-s" ]; then
+        python client.py $1 $2 $3 $4 $5
+    else
+        python client.py $1 $2 $3 $4
+    fi
+elif [ $1 == "-s" ]; then
+    python client.py $1 $2 $3
+else
+    python client.py $1 $2
+fi

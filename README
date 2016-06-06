@@ -1,0 +1,86 @@
+For this project, we should solve following problems,
+1. Set up a TCP connection between client and server
+2. Process the information come from the server and send it back
+3. Connection with SSL
+
+For problem 1, we choose Python to finish it. Because Python is high-level language and it is easy for Python to open the socket to connect to server.
+For problem 2, we first need to know how the client and server communicate with each other, like the message format. Then we need to detect the information in the message like which part is useful for the calculation. Last, we write a calculator to calculate the answer and send it back to server.
+For problem 3, we first open a SSL connection by manually.
+
+
+IC685b3595b452:~ ma.p$ openssl s_client -connect cs5700sp16.ccs.neu.edu:27994
+CONNECTED(00000003)
+depth=0 /C=US/ST=Massachusetts/L=Boston/O=CS 5700/OU=Project 1/CN=Christo Wilson/emailAddress=cbw@ccs.neu.edu
+verify error:num=18:self signed certificate
+verify return:1
+depth=0 /C=US/ST=Massachusetts/L=Boston/O=CS 5700/OU=Project 1/CN=Christo Wilson/emailAddress=cbw@ccs.neu.edu
+verify error:num=10:certificate has expired
+notAfter=Apr 26 21:21:25 1904 GMT
+verify return:1
+depth=0 /C=US/ST=Massachusetts/L=Boston/O=CS 5700/OU=Project 1/CN=Christo Wilson/emailAddress=cbw@ccs.neu.edu
+notAfter=Apr 26 21:21:25 1904 GMT
+verify return:1
+---
+Certificate chain
+ 0 s:/C=US/ST=Massachusetts/L=Boston/O=CS 5700/OU=Project 1/CN=Christo Wilson/emailAddress=cbw@ccs.neu.edu
+   i:/C=US/ST=Massachusetts/L=Boston/O=CS 5700/OU=Project 1/CN=Christo Wilson/emailAddress=cbw@ccs.neu.edu
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+MIIErzCCA5egAwIBAgIJAI/dbE2FfJs5MA0GCSqGSIb3DQEBBQUAMIGVMQswCQYD
+VQQGEwJVUzEWMBQGA1UECBMNTWFzc2FjaHVzZXR0czEPMA0GA1UEBxMGQm9zdG9u
+MRAwDgYDVQQKEwdDUyA1NzAwMRIwEAYDVQQLEwlQcm9qZWN0IDExFzAVBgNVBAMT
+DkNocmlzdG8gV2lsc29uMR4wHAYJKoZIhvcNAQkBFg9jYndAY2NzLm5ldS5lZHUw
+IBcNMTMwMTE2MDM0OTQxWhgPMTkwNDA0MjYyMTIxMjVaMIGVMQswCQYDVQQGEwJV
+UzEWMBQGA1UECBMNTWFzc2FjaHVzZXR0czEPMA0GA1UEBxMGQm9zdG9uMRAwDgYD
+VQQKEwdDUyA1NzAwMRIwEAYDVQQLEwlQcm9qZWN0IDExFzAVBgNVBAMTDkNocmlz
+dG8gV2lsc29uMR4wHAYJKoZIhvcNAQkBFg9jYndAY2NzLm5ldS5lZHUwggEiMA0G
+CSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDV3oHxZfSC4gtH9aThxRDxUaidmUJD
+6UQNwXTPfZkf3RRGyUNIdUk2EUpraU+98vZKP9dfimaX9ZDLKAFw2rPZpWk9UeCc
+rThdn0Jnrj0Vesd9oebMHLy4lTN007bAVf/RYYWZty3uIl8zqeRC8ZeAGD+USX+6
+7yvMuU1jfaLPO+FwH4FR3NHsk6xzfGvYyViu1BsoppxhFYDkgJ2xgNAVWzm+8NXf
+glkdqOqfwP6urLbUSjBTqgFEK6fb2t87wmhfF1MTXi6jEWeTl7xFZgbDv8C0OZxG
+S+62xwvEU4CX72VFqGNIEyVL8np8PIhqRwihFHLuFSeHxdT+Mzu+WFV5AgMBAAGj
+gf0wgfowHQYDVR0OBBYEFIjCaSx/Lmt9MEiaXRCRk76JMSXdMIHKBgNVHSMEgcIw
+gb+AFIjCaSx/Lmt9MEiaXRCRk76JMSXdoYGbpIGYMIGVMQswCQYDVQQGEwJVUzEW
+MBQGA1UECBMNTWFzc2FjaHVzZXR0czEPMA0GA1UEBxMGQm9zdG9uMRAwDgYDVQQK
+EwdDUyA1NzAwMRIwEAYDVQQLEwlQcm9qZWN0IDExFzAVBgNVBAMTDkNocmlzdG8g
+V2lsc29uMR4wHAYJKoZIhvcNAQkBFg9jYndAY2NzLm5ldS5lZHWCCQCP3WxNhXyb
+OTAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4IBAQC4Uw8TAEIbpALpKjiU
+ZauKIHfg9Km2rb/0pYZqYXXP0CQUBTo73F+MKYrjeldu6dTipdMUIXDH7BhUbp8T
+BmT+dZTr/evBPF7g23BO15SJToKWhbDbLDNPnKH6vecUOfkQ6F9PGeBZTwcPAfoP
+CK1aBTmXH6ejYEeKLpEkqOKVlFp8HeHk9Bp/ANOKJStNNL2QopirCVVYNIObxLR1
+vudCeOfL1IMP4cMb4Ta6TxxGip9kh0CJM8om0sEaQF5+pAEgtKDyj5Rr+C1XjiCn
+R/LKhzkrGmPsoTPm4Bcj+gkwpraAUFI7J2PWhfxJSbBCj2KQQqM3u/8t1WqSvB2B
+YSKN
+-----END CERTIFICATE-----
+subject=/C=US/ST=Massachusetts/L=Boston/O=CS 5700/OU=Project 1/CN=Christo Wilson/emailAddress=cbw@ccs.neu.edu
+issuer=/C=US/ST=Massachusetts/L=Boston/O=CS 5700/OU=Project 1/CN=Christo Wilson/emailAddress=cbw@ccs.neu.edu
+---
+No client certificate CA names sent
+---
+SSL handshake has read 1372 bytes and written 456 bytes
+---
+New, TLSv1/SSLv3, Cipher is AES256-SHA
+Server public key is 2048 bit
+Secure Renegotiation IS supported
+Compression: NONE
+Expansion: NONE
+SSL-Session:
+    Protocol  : TLSv1
+    Cipher    : AES256-SHA
+    Session-ID: E56A8AAC183CD22B4A9715860352F6F54ADAF7C1BB96058BAA172AC98FA3EEA7
+    Session-ID-ctx: 
+    Master-Key: 0E01DDC2A6C8654E5B0E051E05532DB3FD2319AAFB17B266CDDC51BE2AAB7032209069213CA1EF2EEF228A8744CEF05C
+    Key-Arg   : None
+    Start Time: 1453928612
+    Timeout   : 300 (sec)
+    Verify return code: 10 (certificate has expired)
+---
+
+So, we can know the information about ssl
+sslsock = ssl.wrap_socket (s, ssl_version = ssl.PROTOCOL_TLSv1, ciphers = "AES256-SHA")
+
+
+The program is working now but it still far from “perfect”. We add the error detections in the programs, like the wrong NUID, wrong port or invalid server name. After that, we write the shell script to meet the requirement and also develop a make file to give the permission before we run the program.
+
